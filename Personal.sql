@@ -9,7 +9,6 @@ create table if not exists department (
 --теоритически менеджер может возглавлять несколько отделов
 create table if not exists manager (
 	manager_id SERIAL primary key,
-	department_id integer not null references department(department_id),
 	manager_name varchar (30) not null
 );
 
@@ -17,8 +16,9 @@ create table if not exists manager (
 --ID сотрудника, ID отдела и имя сотрудника. Сотрудник работает в одном отделе
 --и имеет одного руководителя что определяется составным ключом.
 create table if not exists employee (
+	department_id integer not null references department(department_id),	
 	manager_id integer not null references manager(manager_id),
-	department_id integer not null references department(department_id),
 	employee_name varchar (30) not null,
-	constraint mngr_dpr primary key (manager_id, department_id) 
+	constraint mngr_dpr primary key (manager_id, department_id)
 );
+
